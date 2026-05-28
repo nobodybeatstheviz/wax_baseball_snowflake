@@ -1,0 +1,26 @@
+# Secrets
+.env
+*.token
+connections.toml
+
+# Snowflake CLI artifacts
+*.log
+.snowflake/
+
+# Data files (CSVs live on Drive, not in this repo)
+*.csv
+*.gz
+*.zip
+
+# Python
+__pycache__/
+*.pyc
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Windows
+Thumbs.db
+desktop.ini
