@@ -2,11 +2,14 @@ $ErrorActionPreference = 'Stop'
 
 $Snow      = "$env:APPDATA\Python\Python313\Scripts\snow.exe"
 $Conn      = 'wax_baseball'
-$LahmanDir = 'G:\My Drive\001-Wax-System\wax-baseball\lahman-2025\lahman_1871-2025_csv'
+# The CSVs are not kept in any repo (ruled 2026-09-02): download the bundle from
+# https://sabr.org/lahman-database/, unzip to %USERPROFILE%\Downloads\lahman_1871-2025_csv
+# (or set LAHMAN_DIR), and verify against wax-system\wax-baseball\lahman-2025\MANIFEST.sha256.
+$LahmanDir = if ($env:LAHMAN_DIR) { $env:LAHMAN_DIR } else { Join-Path $env:USERPROFILE 'Downloads\lahman_1871-2025_csv' }
 $Stage     = '@~/lahman'
 $SqlDir    = Join-Path $PSScriptRoot '..\sql'
 
-if (-not (Test-Path $LahmanDir)) { throw "Lahman dir not found: $LahmanDir" }
+if (-not (Test-Path $LahmanDir)) { throw "Lahman dir not found: $LahmanDir -- download https://sabr.org/lahman-database/, unzip there (or set LAHMAN_DIR), verify with sha256sum -c against wax-system\wax-baseball\lahman-2025\MANIFEST.sha256" }
 if (-not (Test-Path $Snow))      { throw "snow.exe not found: $Snow" }
 
 Write-Host "==> 1. Setup (DATABASE / SCHEMA / FILE FORMAT)" -ForegroundColor Cyan
